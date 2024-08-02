@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كرة - أموانج</title>
+    <style>
+        @font-face {
+            font-family: 'Al Fares';
+            src: url('fonts/al-fares.woff') format('woff'); /* تحديد مسار الخط */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Al Fares', cursive; /* تطبيق خط Al Fares على كافة النصوص */
+            background-color: #f0f0f0; /* خلفية رمادية فاتحة */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 360px; /* عرض الإطار الذي يحاكي إطار الأندرويد */
+            height: 640px; /* ارتفاع الإطار الذي يحاكي إطار الأندرويد */
+            background-image: url('https://cdn.theatlantic.com/thumbor/EmW-E0FwUa0MhOoGk0BXYyBiBm0=/0x0:1718x1718/1718x1718/media/files/est/space-calculator/background6.jpg'); /* خلفية الصورة */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 20px; /* زوايا مدورة */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* ظل ناعم */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative; /* للتأكد من صحة موقع العناصر */
+        }
+
+        .header {
+            font-size: 36px;
+            font-weight: bold;
+            color: #add8e6; /* الأزرق الفاتح */
+            text-shadow: 2px 2px 2px #000000; /* حدود بلون أسود */
+            margin-bottom: 20px;
+        }
+
+        .note {
+            font-size: 16px;
+            color: #ff0000; /* لون النص الأحمر للتنبيه */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .player-input {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .player-input input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            width: 80%;
+        }
+
+        .button-container {
+            margin-bottom: 20px;
+        }
+
+        .player-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        .player-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+
+        .player-item span {
+            margin-left: 10px;
+        }
+
+        .btn {
+            background-color: #ffffff; /* لون الزر الأبيض */
+            border: none;
+            border-radius: 8px;
+            color: #000000; /* لون النص الأسود */
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px 30px;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            background-color: #add8e6; /* لون أزرق فاتح عند التمرير */
+            color: #000000; /* نص أسود */
+        }
+
+        .btn:active {
+            transform: scale(0.95); /* تأثير الضغط على الزر */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">كرة</div>
+        <div class="note">تنويه: الحد الأدنى للعب هو 3 أشخاص</div>
+        <div class="player-input">
+            <input type="text" id="playerName" placeholder="اكتب اسم اللاعب">
+            <button class="btn" onclick="addPlayer()">إضافة لاعب</button>
+        </div>
+        <ul class="player-list" id="playerList">
+            <!-- قائمة اللاعبين ستضاف هنا -->
+        </ul>
+        <button class="btn" onclick="removePlayers()">حذف اللاعبين</button>
+    </div>
+
+    <script>
+        const playerList = document.getElementById('playerList');
+
+        function addPlayer() {
+            const playerNameInput = document.getElementById('playerName');
+            const playerName = playerNameInput.value.trim();
+
+            if (playerName) {
+                const li = document.createElement('li');
+                li.className = 'player-item';
+
+                const span = document.createElement('span');
+                span.textContent = playerName;
+
+                const removeBtn = document.createElement('button');
+                removeBtn.textContent = 'حذف';
+                removeBtn.className = 'btn';
+                removeBtn.style.backgroundColor = '#ff4d4d'; /* لون الزر الأحمر */
+                removeBtn.onclick = () => li.remove(); /* حذف العنصر عند الضغط */
+
+                li.appendChild(span);
+                li.appendChild(removeBtn);
+                playerList.appendChild(li);
+
+                playerNameInput.value = ''; // مسح خانة الإدخال
+            }
+        }
+
+        function removePlayers() {
+            playerList.innerHTML = ''; // مسح قائمة اللاعبين
+        }
+    </script>
+</body>
+</html>
